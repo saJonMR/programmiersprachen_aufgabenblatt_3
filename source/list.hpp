@@ -250,8 +250,9 @@ class List {
         first_ = nullptr;
         last_ = nullptr;
       } else {
+        ListNode<T> *tmp = first_;
         delete first_;
-        first_ = first_->next;
+        first_ = tmp->next;
         first_->prev = nullptr;
       }
       size_--;
@@ -267,8 +268,9 @@ class List {
         first_ = nullptr;
         last_ = nullptr;
       } else {
+        ListNode<T> *tmp = last_;
         delete last_;
-        last_ = last_->prev;
+        last_ = tmp->prev;
         last_->next = nullptr;
       }
       size_--;
