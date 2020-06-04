@@ -263,22 +263,20 @@ class List {
       size_--;
     }
 
-    /* ... */
+    /* returns value of first node */
     T& front() {
       if(empty()) {
         throw "List is empty";
       }
-
-      // TODO: remainder of front-method (Aufgabe 3.3)
+      return first_->value;
     }
 
-    /* ... */
+    /* returns value of last node */
     T& back() {
       if(empty()) {
         throw "List is empty";
       }
-
-      // TODO: remainder of back-method (Aufgabe 3.3)
+      return last_->value;
     }
 
     /* Checks if the pointer to the first element points to nothing */
