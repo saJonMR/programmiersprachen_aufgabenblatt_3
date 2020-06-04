@@ -185,9 +185,16 @@ class List {
       return {};
     }
 
-    /* ... */ 
-    // test and implement:
-    //TODO: clear()-Method (Aufgabe 3.4)
+    /* Calls pop_front until first_ = last_ and then pops the last element indivdually */ 
+    void clear() {
+      if(empty()) {
+        throw "List is empty";
+      }
+      while(first_ != last_) {
+        pop_front();
+      }
+      pop_front();
+    }
 
 
     /* ... */
@@ -239,9 +246,11 @@ class List {
         throw "List is empty";
       }
       if(first_ == last_) {
+        delete first_;
         first_ = nullptr;
         last_ = nullptr;
       } else {
+        delete first_;
         first_ = first_->next;
         first_->prev = nullptr;
       }
@@ -254,9 +263,11 @@ class List {
         throw "List is empty";
       }
       if(first_ == last_) {
+        delete last_;
         first_ = nullptr;
         last_ = nullptr;
       } else {
+        delete last_;
         last_ = last_->prev;
         last_->next = nullptr;
       }
