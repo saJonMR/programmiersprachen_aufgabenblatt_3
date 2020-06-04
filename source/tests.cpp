@@ -26,12 +26,14 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 #include "sub_tests/pop_front.test"
 #include "sub_tests/pop_back.test"
 
-//test case definitions for 
+//test case definitions for clear method of list
+#include "sub_tests/clear.test"
+
 
 //test cases for element access of list
 #include "sub_tests/front.test"
 #include "sub_tests/back.test"
-
+/*
 //test cases for retrieving iterators
 #include "sub_tests/begin.test"
 #include "sub_tests/end.test"
@@ -42,6 +44,7 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 #include "sub_tests/iterators/operator_equals.test"
 #include "sub_tests/iterators/operator_does_not_equal.test"
 #include "sub_tests/iterators/operator_iterate_forward.test"
+*/
 
 int main(int argc, char *argv[])
 {
