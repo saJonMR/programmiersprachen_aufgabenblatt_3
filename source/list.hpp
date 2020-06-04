@@ -126,10 +126,12 @@ class List {
     using const_reference = T const&;
     using iterator        = ListIterator<T>;
 
-    // not fully implemented yet
-    // TODO: do not forget about the initialiser list! (Aufgabe 3.2)
-    /* ... */
-    List() {}
+    /* Initializes the List with size_ = 0 and both the first and the last node pointing to null */
+    List() :
+      size_{0},
+      first_{nullptr},
+      last_{nullptr}
+    {}
 
     // test and implement:
     //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
@@ -191,7 +193,7 @@ class List {
     /* ... */
     //TODO: member function insert (Aufgabe 3.12)
 
-    /* ... */
+    /* ... */ 
     //TODO: member function insert (Aufgabe 3.13)
 
     /* ... */
@@ -199,32 +201,66 @@ class List {
     //TODO: member function reverse (Aufgabe 3.7 - Teil 1)
 
 
-    /* ... */
+    /* Insert Element at the front of the List */
     void push_front(T const& element) {
-      // TODO: push_front-method (Aufgabe 3.3)
+      ListNode<T> *tmp = new ListNode<T>{element};
+      if (first_ == nullptr) {
+        first_ = tmp;
+        last_ = tmp;
+        tmp->next = nullptr;
+        tmp->prev = nullptr;
+      } else {
+        tmp->next = first_;
+        first_->prev = tmp;
+        first_ = tmp;
+      }
+      size_++;
     }
 
-    /* ... */
+    /* Insert Element at the back of the List */
     void push_back(T const& element) {
-      // TODO: push_back-method (Aufgabe 3.3)
+      ListNode<T> *tmp = new ListNode<T>{element};
+      if (first_ == nullptr) {
+        first_ = tmp;
+        last_ = tmp;
+        tmp->next = nullptr;
+        tmp->prev = nullptr;
+      } else {
+        last_->next = tmp;
+        tmp->prev = last_;
+        last_ = tmp;
+      }
+      size_++;
     }
 
-    /* ... */
+    /* Checks if list has one or more than one item and adjusts pointers */
     void pop_front() {
       if(empty()) {
         throw "List is empty";
       }
-
-      // TODO: remainder of pop_front-method (Aufgabe 3.3)
+      if(first_ == last_) {
+        first_ = nullptr;
+        last_ = nullptr;
+      } else {
+        first_ = first_->next;
+        first_->prev = nullptr;
+      }
+      size_--;
     }
 
-    /* ... */
+    /* Checks if list has one or more than one item and adjusts pointers */
     void pop_back() {
       if(empty()) {
         throw "List is empty";
       }
-
-      // TODO: remainder of pop_back-method (Aufgabe 3.3)
+      if(first_ == last_) {
+        first_ = nullptr;
+        last_ = nullptr;
+      } else {
+        last_ = last_->prev;
+        last_->next = nullptr;
+      }
+      size_--;
     }
 
     /* ... */
@@ -245,18 +281,15 @@ class List {
       // TODO: remainder of back-method (Aufgabe 3.3)
     }
 
-    /* ... */
+    /* Checks if the pointer to the first element points to nothing */
     bool empty() const {
-
-      // TODO: empty-method (Aufgabe 3.2)
-      return false;
+      return first_ == nullptr;
     };
 
 
     /* ... */
-    std::size_t size() const{
-      // TODO: size-method (Aufgabe 3.2)      
-      return 27;
+    std::size_t size() const{   
+      return size_;
   };
 
 
