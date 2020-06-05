@@ -166,9 +166,9 @@ class List {
       // make use of operator==
     }
 
-    /* ... */
+    /* calls clear function */
     ~List() {
-      //TODO: Implement via clear-Method (Aufgabe 3.4)
+      clear();
     } //can not really be tested
 
     /* ... */
