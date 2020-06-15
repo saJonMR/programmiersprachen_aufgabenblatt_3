@@ -221,6 +221,7 @@ class List {
         first_->prev = tmp;
         first_ = tmp;
       }
+      delete tmp;
       size_++;
     }
 
@@ -237,6 +238,7 @@ class List {
         tmp->prev = last_;
         last_ = tmp;
       }
+      delete tmp;
       size_++;
     }
 
@@ -246,14 +248,13 @@ class List {
         throw "List is empty";
       }
       if(first_ == last_) {
-        delete first_;
         first_ = nullptr;
         last_ = nullptr;
       } else {
         ListNode<T> *tmp = first_;
-        delete first_;
         first_ = tmp->next;
         first_->prev = nullptr;
+        delete tmp;
       }
       size_--;
     }
@@ -264,14 +265,13 @@ class List {
         throw "List is empty";
       }
       if(first_ == last_) {
-        delete last_;
         first_ = nullptr;
         last_ = nullptr;
       } else {
         ListNode<T> *tmp = last_;
-        delete last_;
         last_ = tmp->prev;
         last_->next = nullptr;
+        delete tmp;
       }
       size_--;
     }
