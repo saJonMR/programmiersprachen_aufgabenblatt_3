@@ -187,13 +187,9 @@ class List {
 
     /* Calls pop_front until first_ = last_ and then pops the last element indivdually */ 
     void clear() {
-      if(empty()) {
-        throw "List is empty";
+      while(size_ > 0) {
+        pop_back();
       }
-      while(first_ != last_) {
-        pop_front();
-      }
-      pop_front();
     }
 
 
@@ -221,7 +217,6 @@ class List {
         first_->prev = tmp;
         first_ = tmp;
       }
-      delete tmp;
       size_++;
     }
 
@@ -238,7 +233,6 @@ class List {
         tmp->prev = last_;
         last_ = tmp;
       }
-      delete tmp;
       size_++;
     }
 
@@ -251,10 +245,10 @@ class List {
         first_ = nullptr;
         last_ = nullptr;
       } else {
-        ListNode<T> *tmp = first_;
-        first_ = tmp->next;
+        ListNode<T> *newFirst = first_->next;
+        first_->next = nullptr;
+        first_ = newFirst;
         first_->prev = nullptr;
-        delete tmp;
       }
       size_--;
     }
@@ -268,10 +262,10 @@ class List {
         first_ = nullptr;
         last_ = nullptr;
       } else {
-        ListNode<T> *tmp = last_;
-        last_ = tmp->prev;
+        ListNode<T> *newLast = last_->prev;
+        last_->prev = nullptr;
+        last_ = newLast;
         last_->next = nullptr;
-        delete tmp;
       }
       size_--;
     }
@@ -294,7 +288,7 @@ class List {
 
     /* Checks if the pointer to the first element points to nothing */
     bool empty() const {
-      return first_ == nullptr;
+      return size_ == 0;
     };
 
 
