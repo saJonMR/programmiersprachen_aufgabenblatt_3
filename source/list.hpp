@@ -133,8 +133,18 @@ class List {
       last_{nullptr}
     {}
 
-    // test and implement:
-    //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
+    /* Initializes a new empty List and copies (deep) the elements of the input List until it reaches the last node */
+    List(List<T> const& l) :
+      size_{0},
+      first_{nullptr},
+      last_{nullptr }
+    {
+      ListNode<T> *node = l.first_;
+      while(node != nullptr) {
+        push_back(node->value);
+        node = node->next;
+      }
+    }
 
 
 
@@ -206,32 +216,32 @@ class List {
 
     /* Insert Element at the front of the List */
     void push_front(T const& element) {
-      ListNode<T> *tmp = new ListNode<T>{element};
+      ListNode<T> *node = new ListNode<T>{element};
       if (first_ == nullptr) {
-        first_ = tmp;
-        last_ = tmp;
-        tmp->next = nullptr;
-        tmp->prev = nullptr;
+        first_ = node;
+        last_ = node;
+        node->next = nullptr;
+        node->prev = nullptr;
       } else {
-        tmp->next = first_;
-        first_->prev = tmp;
-        first_ = tmp;
+        node->next = first_;
+        first_->prev = node;
+        first_ = node;
       }
       size_++;
     }
 
     /* Insert Element at the back of the List */
     void push_back(T const& element) {
-      ListNode<T> *tmp = new ListNode<T>{element};
+      ListNode<T> *node = new ListNode<T>{element};
       if (first_ == nullptr) {
-        first_ = tmp;
-        last_ = tmp;
-        tmp->next = nullptr;
-        tmp->prev = nullptr;
+        first_ = node;
+        last_ = node;
+        node->next = nullptr;
+        node->prev = nullptr;
       } else {
-        last_->next = tmp;
-        tmp->prev = last_;
-        last_ = tmp;
+        last_->next = node;
+        node->prev = last_;
+        last_ = node;
       }
       size_++;
     }
