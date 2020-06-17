@@ -127,11 +127,7 @@ class List {
     using iterator        = ListIterator<T>;
 
     /* Initializes the List with size_ = 0 and both the first and the last node pointing to null */
-    List() :
-      size_{0},
-      first_{nullptr},
-      last_{nullptr}
-    {}
+    List()=default;
 
     /* Initializes a new empty List and copies (deep) the elements of the input List until it reaches the last node */
     List(List<T> const& l) :
@@ -158,9 +154,17 @@ class List {
     // test and implement:
     //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
 
-    /* ... */
-    // test and implement:
-    //TODO: (unifying) Assignment operator (Aufgabe 3.6)
+    /* Unifying Assignment Operator */
+    List& operator=(List<T> rhs) {
+      swap(rhs);
+      return *this;
+    }
+
+    void swap(List<T>& rhs) {
+      std::swap(first_, rhs.first_);
+      std::swap(last_, rhs.last_);
+      std::swap(size_, rhs.size_);
+    }
 
     /* ... */
     // test and implement:
@@ -312,9 +316,9 @@ class List {
 
   // list members
   private: 
-    std::size_t size_;
-    ListNode<T>* first_;
-    ListNode<T>* last_;
+    std::size_t size_ = 0;
+    ListNode<T>* first_ = nullptr;
+    ListNode<T>* last_ = nullptr;
 };
 
 /* ... */
