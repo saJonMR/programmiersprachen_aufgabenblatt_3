@@ -247,6 +247,7 @@ class List {
       } else {
         ListNode<T> *newFirst = first_->next;
         first_->next = nullptr;
+        delete first_;
         first_ = newFirst;
         first_->prev = nullptr;
       }
@@ -264,6 +265,7 @@ class List {
       } else {
         ListNode<T> *newLast = last_->prev;
         last_->prev = nullptr;
+        delete last_;
         last_ = newLast;
         last_->next = nullptr;
       }
