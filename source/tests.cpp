@@ -35,6 +35,9 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 
 //test case for copy constructor of list
 #include "sub_tests/copy_constructor.test"
+
+//test case for unifying assignment opeator of list
+#include "sub_tests/unifying_assignment_operator.test"
 /*
 //test cases for retrieving iterators
 #include "sub_tests/begin.test"

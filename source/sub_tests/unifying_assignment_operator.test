@@ -1,0 +1,44 @@
+TEST_CASE("Unifying Copy and Swap operator, [List = List2]") {
+    List<int> list{}; 
+    List<int> list2{};
+
+    // actual tests
+    // ------------
+    list2.push_front(9);
+    list2.push_front(1);
+    list2.push_front(-7);
+
+    list = list2;
+
+    {
+    //front to back list content should be: -7 1 9
+    auto first_pointer           = get_first_pointer(list);
+    auto last_pointer            = get_last_pointer(list);
+    auto forward_middle_pointer  = first_pointer->next;
+    auto backward_middle_pointer = last_pointer->prev;
+
+    SECTION("first_ and last_ should not be nullptrs anymore") {
+      REQUIRE(nullptr != first_pointer);
+      REQUIRE(nullptr != last_pointer);
+    }
+
+    SECTION("the links between nodes are set correctly") {
+      REQUIRE(nullptr == first_pointer->prev);
+      REQUIRE(nullptr == last_pointer->next);
+      REQUIRE(forward_middle_pointer       == backward_middle_pointer);
+      REQUIRE(forward_middle_pointer->next == last_pointer);
+      REQUIRE(first_pointer                == backward_middle_pointer->prev);
+    }
+
+    SECTION("front to back list content should be: -7 1 9") {
+      REQUIRE(-7 == first_pointer->value);
+      REQUIRE( 1 == forward_middle_pointer->value);
+      REQUIRE( 9 == last_pointer->value);
+    }
+    
+    SECTION("the list has size 3 and is not empty") {
+      REQUIRE( 3     == get_size(list));
+      REQUIRE( false == list.empty());
+    }
+  }
+}
