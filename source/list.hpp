@@ -129,6 +129,7 @@ class List {
     /* Initializes the List with size_ = 0 and both the first and the last node pointing to null */
     List()=default;
 
+    //Copy Constructor (Deep Copy)
     /* Initializes a new empty List and copies (deep) the elements of the input List until it reaches the last node */
     List(List<T> const& l) :
       size_{0},
@@ -151,16 +152,15 @@ class List {
       //not implemented yet
     }
 
-    // test and implement:
-    //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
-
     /* Unifying Assignment Operator */
-    List& operator=(List<T> rhs) {
+    /* Makes Use of Swap function to Assign Pointers and Size */
+    List& operator=(List rhs) {
       swap(rhs);
       return *this;
     }
 
-    void swap(List<T>& rhs) {
+    //swap function that swaps the first_ and last_ pointers as well as size_
+    void swap(List& rhs) {
       std::swap(first_, rhs.first_);
       std::swap(last_, rhs.last_);
       std::swap(size_, rhs.size_);
@@ -216,6 +216,15 @@ class List {
     /* ... */
 
     //TODO: member function reverse (Aufgabe 3.7 - Teil 1)
+    void reverse() {
+      ListNode<T> *node = last_;
+      last_ = first_;
+      first_ = node;
+      while(node != nullptr) {
+        std::swap(node->next, node->prev);
+        node = node->next;
+      }
+    }
 
 
     /* Insert Element at the front of the List */
@@ -302,7 +311,7 @@ class List {
       return last_->value;
     }
 
-    /* Checks if the pointer to the first element points to nothing */
+    /* Returns wether List is empty or not*/
     bool empty() const {
       return size_ == 0;
     };
@@ -324,6 +333,12 @@ class List {
 /* ... */
 //TODO: Freie Funktion reverse 
 //(Aufgabe 3.7 - Teil 2, benutzt Member-Funktion reverse)
+template<typename T>
+List<T> reverse(List<T> const& list) {
+  List<T> newL = list;
+  newL.reverse();
+  return newL;
+}
 
 /* ... */
 //TODO: Freie Funktion operator+ (3.14 - Teil 2)
