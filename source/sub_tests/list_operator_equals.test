@@ -1,0 +1,19 @@
+TEST_CASE("Compare Lists, [comparison]") {
+    List<int> list{}; 
+
+    // actual tests
+    // ------------
+    list.push_front(-7);
+    list.push_front(1);
+    list.push_front(9);
+
+    //front to back list content should be: 9 1 -7
+
+    List<int> list2{list};
+
+    bool equal = list == list2;
+    bool unequal = list != list2;
+    
+    REQUIRE(equal == true);
+    REQUIRE(unequal == false);
+}
