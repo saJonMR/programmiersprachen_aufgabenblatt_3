@@ -30,7 +30,7 @@ struct ListIterator {
   using iterator_category = std::bidirectional_iterator_tag;
 
 
-  /* Returns Value of current Node */
+  /* Returns Reference to Value of current Node */
   T&  operator*()  const {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
@@ -38,14 +38,12 @@ struct ListIterator {
     return node->value;
   } //call *it
 
-  /* DESCRIPTION  operator->() */
+  /* Returns pointer to Reference of current node */
   T* operator->() const {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
-
-    //TODO: remaining implementation of derefenciation of 
-    //      iterator using operator-> (Aufgabe 3.11 - Teil 2)
+    return &node->value;
   }  //call it->method() or it->member
 
 
@@ -54,10 +52,8 @@ struct ListIterator {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
-
-    //TODO: Implement Postincrement-Operation for Iterator
-    //      (Aufgabe 3.11 - Teil 3)
-    
+    node = node->next;
+    return *this;
   }
 
   /* POSTINCREMENT (signature distinguishes the iterators), 
@@ -66,26 +62,24 @@ struct ListIterator {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
-
-    //TODO: Implement Postincrement-Operation for Iterator
-    //      (Aufgabe 3.11 - Teil 4)
-
+    auto newit = *this;
+    ++*this;
+    return newit;
   }
 
-
-  /* ... */
+  /* Compares Values of Both Nodes */
   bool operator==(ListIterator<T> const& x) const {
-    //TODO: Implement Equality-Operation for Iterator
-    //      (Aufgabe 3.11 - Teil 5)
-    // Iterators should be the same if they refer to the same node
+    if(x.node == node) {
+      return true;
+    } 
     return false;
   } // call it: == it
 
-  /* ... */
+  /* Compares Values of Both Nodes */
   bool operator!=(ListIterator<T> const& x) const {
-    //TODO: Implement Inequality-Operation for Iterator  
-    //      (Aufgabe 3.11 - Teil 6)
-    // Reuse operator==
+    if(x.node != node) {
+      return true;
+    }
     return false;
   } // call it: != it
 
@@ -198,15 +192,13 @@ class List {
 
     /* Returns iterator that points to first node */
     ListIterator<T> begin() {
-      ListIterator<T> begin;
-      begin->node = first_;
+      auto begin = first_;
       return {begin};
     }
 
     /* Returns iterator that points behind last node (nullptr) */
     ListIterator<T> end() {
-      ListIterator<T> end;
-      end->node = nullptr;
+      auto end = nullptr;
       return {end};
     }
 
