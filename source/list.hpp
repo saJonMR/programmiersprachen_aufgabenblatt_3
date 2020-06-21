@@ -30,15 +30,12 @@ struct ListIterator {
   using iterator_category = std::bidirectional_iterator_tag;
 
 
-  /* DESCRIPTION  operator*() */
+  /* Returns Value of current Node */
   T&  operator*()  const {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
-
-    //TODO: remaining implementation of derefenciation of 
-    //      iterator using operator* (Aufgabe 3.11 - Teil 1)
-
+    return node->value;
   } //call *it
 
   /* DESCRIPTION  operator->() */
@@ -143,8 +140,6 @@ class List {
       }
     }
 
-
-
     //TODO: Initializer-List Konstruktor (3.14 - Teil 1)
     /* ... */
     // test and implement:
@@ -169,15 +164,31 @@ class List {
     /* ... */
     // test and implement:
 
-    bool operator==(List const& rhs)
-    {
-      //TODO: operator== (Aufgabe 3.8)
+    bool operator==(List const& rhs) {
+      bool status = false;
+      if(size_ == rhs.size_) {
+        status = true;
+        ListNode<T> *nodelhs = first_;
+        ListNode<T> *noderhs = rhs.first_;
+        while(nodelhs != nullptr && status) {
+          if(nodelhs->value == noderhs->value) {
+            nodelhs = nodelhs->next;
+            noderhs = noderhs->next;
+          } else {
+            status = false;
+          }
+        }
+      }
+      return status;
     }
 
     bool operator!=(List const& rhs)
     {
-      //TODO: operator!= (Aufgabe 3.8)
-      // make use of operator==
+      if(*this == rhs) {
+        return false;
+      } else {
+        return true;
+      }
     }
 
     /* calls clear function */
@@ -185,18 +196,18 @@ class List {
       clear();
     } //can not really be tested
 
-    /* ... */
+    /* Returns iterator that points to first node */
     ListIterator<T> begin() {
-      //TODO: begin-Method returning an Iterator to the 
-      //      first element in the List (Aufgabe 3.10)
-      return {};
+      ListIterator<T> begin;
+      begin->node = first_;
+      return {begin};
     }
 
-    /* ... */
+    /* Returns iterator that points behind last node (nullptr) */
     ListIterator<T> end() {
-      //TODO: end-Method returning an Iterator to element after (!) 
-      //      the last element in the List (Aufgabe 3.10)
-      return {};
+      ListIterator<T> end;
+      end->node = nullptr;
+      return {end};
     }
 
     /* Calls pop_front until first_ = last_ and then pops the last element indivdually */ 
@@ -206,15 +217,13 @@ class List {
       }
     }
 
-
     /* ... */
     //TODO: member function insert (Aufgabe 3.12)
 
     /* ... */ 
     //TODO: member function insert (Aufgabe 3.13)
 
-    /* ... */
-
+    /* Reverses List by changing the direction of the pointers, from front to back*/
     //TODO: member function reverse (Aufgabe 3.7 - Teil 1)
     void reverse() {
       ListNode<T> *node = last_;
@@ -317,7 +326,7 @@ class List {
     };
 
 
-    /* ... */
+    /* Size */
     std::size_t size() const{   
       return size_;
   };
@@ -330,7 +339,7 @@ class List {
     ListNode<T>* last_ = nullptr;
 };
 
-/* ... */
+/* Makes use of member function reverse - takes a List as input and returns a new one */
 //TODO: Freie Funktion reverse 
 //(Aufgabe 3.7 - Teil 2, benutzt Member-Funktion reverse)
 template<typename T>
